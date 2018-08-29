@@ -10,7 +10,7 @@
         <template v-for="(item,index) in $router.options.routes">
           <el-submenu v-if="item.children" :index="item.name" :key="`item_${index}`">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i :class="item.meta.iconClass" style="padding-right:8px;"></i>
               <span>{{item.meta.routeName}}</span>
             </template>
             <template v-for="(subItem,subIndex) in item.children">
@@ -24,7 +24,7 @@
           <div v-else-if="item.name !== 'index'" :key="`item_${index}`">
             <router-link :to="item.path">
               <el-menu-item :index="item.name">
-              <i class="el-icon-menu"></i>
+              <i :class="item.meta.iconClass"></i>
               <span slot="title">{{item.meta.routeName}}</span>
               </el-menu-item>
             </router-link>
@@ -77,6 +77,9 @@ export default {
     .el-submenu__title i,
     .el-menu-item i {
       color: #fff !important;
+    }
+    .el-submenu .el-menu-item {
+      padding-left: 50px !important;
     }
   }
   .content {

@@ -43,7 +43,7 @@ export default new Router({
       name: 'user',
       meta: {
         routeName: '用户管理',
-        iconClass: ''
+        iconClass: 'fas fa-user'
       },
       component: Layout,
       redirect: '/user/list',
