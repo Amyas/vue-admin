@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const Layout = () => import('@/layout/layout')
+const Login = () => import('@/views/Login')
 
 const UserList = () => import('@/views/User/list')
 
@@ -16,8 +17,17 @@ export default new Router({
       redirect: 'user',
       meta: {
         routeName: '首页',
-        iconClass: ''
+        hidden: true
       }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      meta: {
+        routeName: '登录',
+        hidden: true
+      },
+      component: Login
     },
     {
       path: '/test',
