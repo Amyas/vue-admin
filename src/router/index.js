@@ -8,11 +8,25 @@ const UserList = () => import('@/views/User/list')
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {// Index首页模块
       path: '/',
       name: 'index',
-      redirect: 'user'
+      redirect: 'user',
+      meta: {
+        routeName: '首页',
+        iconClass: ''
+      }
+    },
+    {
+      path: '/test',
+      name: 'test',
+      meta: {
+        routeName: '测试管理',
+        iconClass: ''
+      },
+      component: Layout
     },
     {// User用户模块
       path: '/user',
@@ -29,6 +43,26 @@ export default new Router({
           name: 'userlist',
           meta: {
             routeName: '用户列表'
+          },
+          component: UserList
+        }
+      ]
+    },
+    {// a用户模块
+      path: '/a',
+      name: 'a',
+      meta: {
+        routeName: 'a管理',
+        iconClass: ''
+      },
+      component: Layout,
+      redirect: '/a/list',
+      children: [
+        {
+          path: 'list',
+          name: 'alist',
+          meta: {
+            routeName: 'a列表'
           },
           component: UserList
         }
