@@ -21,7 +21,7 @@
         <el-button
           type="primary"
           class="submit"
-          :loading="formIsLoading"
+          :loading="formLoading"
           @click="submit($refs.form)">
           立即登录
         </el-button>
@@ -33,7 +33,7 @@
 import {mapGetters, mapActions} from 'vuex'
 export default {
   computed: {
-    ...mapGetters('login', ['formData', 'formRule', 'formIsLoading'])
+    ...mapGetters('login', ['formData', 'formRule', 'formLoading'])
   },
   methods: {
     ...mapActions('login', ['submit'])

@@ -1,81 +1,62 @@
 <template>
   <list-layout>
-    <div slot="filter">
-      <el-select value="a" placeholder="请选择">
-        <el-option label="选择1" value="a">
-        </el-option>
-      </el-select>
-      <el-select value="a" placeholder="请选择">
-        <el-option label="选择1" value="a">
-        </el-option>
-      </el-select>
-      <el-select value="a" placeholder="请选择">
-        <el-option label="选择1" value="a">
-        </el-option>
-      </el-select>
-    </div>
-    <div slot="ctrl">
-      <el-button type="primary">主要按钮</el-button>
-      <el-button type="success">成功按钮</el-button>
-      <el-button type="info">信息按钮</el-button>
-    </div>
     <div>
       <el-table
-        :data="tableData"
+        :data="listData"
+        v-loading="listLoading"
         stripe
         border
         style="width: 100%">
         <el-table-column
-          prop="date"
-          label="日期"
+          prop="_id"
+          label="编号"
+          width="220">
+        </el-table-column>
+        <el-table-column
+          prop="nickName"
+          label="昵称"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="姓名"
+          prop="username"
+          label="账号"
           width="180">
         </el-table-column>
         <el-table-column
-          prop="address"
-          label="地址">
+          prop="password"
+          label="密码">
         </el-table-column>
+        <el-table-column
+          fixed="right"
+          label="操作"
+          width="100">
+          <template slot-scope="scope">
+            <el-button type="text">编辑</el-button>
+            <el-button @click="remove(scope.row._id)" type="text">删除</el-button>
+          </template>
+        </el-table-column>
+
       </el-table>
-    </div>
-    <div slot="pagination">
-      <el-pagination
-        :page-size="100"
-        layout="total, prev, pager, next"
-        :total="1000">
-      </el-pagination>
     </div>
   </list-layout>
 </template>
 <script>
 import listLayout from '@/layout/listLayout'
+import Store from '@/store'
+import {mapGetters, mapActions} from 'vuex'
 export default {
-  data () {
-    return {
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
-    }
+  async beforeRouteEnter (to, from, next) {
+    await Store.dispatch('user/index')
+    next()
   },
   components: {
     listLayout
+  },
+  computed: {
+    ...mapGetters('user', ['listData', 'listLoading'])
+  },
+  methods: {
+    ...mapActions('user', ['remove'])
   }
 }
 </script>

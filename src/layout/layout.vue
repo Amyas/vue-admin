@@ -1,7 +1,7 @@
 <template>
   <el-container class="layout">
     <el-aside width="200px">
-      <h3>王建鹏</h3>
+      <h3>{{name}}</h3>
       <el-menu
         :default-active="active"
         class="el-menu-vertical-demo"
@@ -53,6 +53,9 @@ export default {
     active () {
       const {matched} = this.$route
       return matched[matched.length - 1].name
+    },
+    name () {
+      return this.$store.getters['login/userName']
     }
   }
 }

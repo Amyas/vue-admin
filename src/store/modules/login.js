@@ -20,7 +20,10 @@ export default {
   getters: {
     formData: state => state.form.data,
     formRule: state => state.form.rule,
-    formIsLoading: state => state.form.isLoading
+    formLoading: state => state.form.isLoading,
+
+    token: state => state.userInfo.token,
+    userName: state => state.userInfo.user.nickName
   },
   mutations: {
     SET_USER_INFO (state, v) {

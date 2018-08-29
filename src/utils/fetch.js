@@ -8,7 +8,13 @@ const instance = axios.create({
 })
 
 instance.interceptors.request.use(
-  config => config,
+  config => {
+    if (config.url !== '/api/login') {
+      const token = Store.getters['login/token']
+      config.headers['authorization'] = token
+    }
+    return config
+  },
   error => Promise.reject(error)
 )
 
@@ -39,18 +45,46 @@ export async function fetchUtil (name, options = {}) {
   }
 }
 
+export async function indexUtil (name, options = {}) {
+  const {params = {}, loading} = options
+
+  loading && Store.commit('SET_STATE', {k: loading, v: true})
+  try {
+    const response = await instance({
+      url: name,
+      method: 'GET',
+      params
+    })
+    return response
+  } catch (error) {
+    throw error
+  } finally {
+    loading && Store.commit('SET_STATE', {k: loading, v: false})
+  }
+}
+
+export async function removeUtil (name, id, options = {}) {
+  const {data = {}, loading} = options
+
+  loading && Store.commit('SET_STATE', {k: loading, v: true})
+  try {
+    const response = await instance({
+      url: `${name}/${id}`,
+      method: 'DELETE',
+      data
+    })
+    return response
+  } catch (error) {
+    throw error
+  } finally {
+    loading && Store.commit('SET_STATE', {k: loading, v: false})
+  }
+}
+
 export function createUtil (name, data = {}) {
   return instance({
     url: name,
     method: 'POST',
-    data
-  })
-}
-
-export function removeUtil (name, id, data = {}) {
-  return instance({
-    url: `${name}/${id}`,
-    method: 'DELETE',
     data
   })
 }
@@ -66,14 +100,6 @@ export function updateUtil (name, id, data = {}) {
 export function showUtil (name, id, params = {}) {
   return instance({
     url: `${name}/${id}`,
-    method: 'GET',
-    params
-  })
-}
-
-export function indexUtil (name, params = {}) {
-  return instance({
-    url: name,
     method: 'GET',
     params
   })

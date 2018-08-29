@@ -10,8 +10,8 @@ export default router => {
     if (!userInfo && !storageUserInfo && to.path !== '/login') {
       Router.replace('/login')
     } else if (!userInfo && storageUserInfo) {
-      Store.commit('login/SET_USER_INFO', storageUserInfo)
-      Router.replace('/')
+      Store.commit('login/SET_USER_INFO', JSON.parse(storageUserInfo))
+      Router.replace(to.path)
     }
     nprogress.start()
     next()
