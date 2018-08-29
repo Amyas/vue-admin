@@ -63,6 +63,7 @@ export default {
   height: 100vh;
   overflow: hidden;
   display: flex;
+  min-width: 1200px;
   .el-aside {
     color: #fff;
     background-color: #409eff;
@@ -87,6 +88,7 @@ export default {
     margin-bottom: 14px;
   }
   .el-main {
+    height: 100%;
     padding: 0;
   }
   a {
