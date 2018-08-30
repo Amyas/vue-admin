@@ -1,8 +1,11 @@
 <template>
   <list-layout>
-    <template slot="ctrl">
-        <el-button type="primary" @click="TOGGLE_FORM(['create',true])">新建用户</el-button>
-    </template>
+    <el-button
+      slot="ctrl"
+      type="primary"
+      @click="TOGGLE_FORM(['create',true])">
+      新建用户
+    </el-button>
     <el-table
       :data="list.data"
       v-loading="list.loading"
@@ -51,11 +54,6 @@ export default {
   async beforeRouteEnter (to, from, next) {
     await Store.dispatch('user/index')
     next()
-  },
-  data () {
-    return {
-      show: false
-    }
   },
   components: {
     listLayout,

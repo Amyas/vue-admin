@@ -10,7 +10,7 @@ export default {
         username: '',
         password: ''
       },
-      rule: {
+      rules: {
         username: [{required: true, message: '请输入用户名!'}],
         password: [{required: true, message: '请输入密码!'}]
       },
@@ -18,10 +18,6 @@ export default {
     }
   },
   getters: {
-    formData: state => state.form.data,
-    formRule: state => state.form.rule,
-    formLoading: state => state.form.loading,
-
     token: state => state.userInfo.token,
     userName: state => state.userInfo.user.nickName
   },
@@ -38,8 +34,8 @@ export default {
         const {data} = state.form
 
         const userInfo = await fetchUtil('login', {
-          data,
           method: 'POST',
+          data,
           loading: 'login.form.loading'
         })
 
