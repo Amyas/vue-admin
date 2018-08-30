@@ -39,6 +39,7 @@ export default {
 
         const userInfo = await fetchUtil('login', {
           data,
+          method: 'POST',
           loading: 'login.form.loading'
         })
 

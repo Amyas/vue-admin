@@ -28,13 +28,21 @@ instance.interceptors.response.use(
 )
 
 export async function fetchUtil (name, options = {}) {
-  const {data = {}, loading} = options
+  const {
+    method = 'GET',
+    data = {},
+    loading
+  } = options
+
+  if (method === 'PUT' || method === 'DELETE') {
+    name = `${name}/${options.id}`
+  }
 
   loading && Store.commit('SET_STATE', {k: loading, v: true})
   try {
     const response = await instance({
       url: name,
-      method: 'POST',
+      method,
       data
     })
     return response
@@ -43,84 +51,4 @@ export async function fetchUtil (name, options = {}) {
   } finally {
     loading && Store.commit('SET_STATE', {k: loading, v: false})
   }
-}
-
-export async function indexUtil (name, options = {}) {
-  const {params = {}, loading} = options
-
-  loading && Store.commit('SET_STATE', {k: loading, v: true})
-  try {
-    const response = await instance({
-      url: name,
-      method: 'GET',
-      params
-    })
-    return response
-  } catch (error) {
-    throw error
-  } finally {
-    loading && Store.commit('SET_STATE', {k: loading, v: false})
-  }
-}
-
-export async function removeUtil (name, id, options = {}) {
-  const {data = {}, loading} = options
-
-  loading && Store.commit('SET_STATE', {k: loading, v: true})
-  try {
-    const response = await instance({
-      url: `${name}/${id}`,
-      method: 'DELETE',
-      data
-    })
-    return response
-  } catch (error) {
-    throw error
-  } finally {
-    loading && Store.commit('SET_STATE', {k: loading, v: false})
-  }
-}
-
-export async function updateUtil (name, id, options = {}) {
-  const {data = {}, loading} = options
-
-  loading && Store.commit('SET_STATE', {k: loading, v: true})
-  try {
-    const response = await instance({
-      url: `${name}/${id}`,
-      method: 'PUT',
-      data
-    })
-    return response
-  } catch (error) {
-    throw error
-  } finally {
-    loading && Store.commit('SET_STATE', {k: loading, v: false})
-  }
-}
-
-export async function createUtil (name, options = {}) {
-  const {data = {}, loading} = options
-
-  loading && Store.commit('SET_STATE', {k: loading, v: true})
-  try {
-    const response = await instance({
-      url: name,
-      method: 'POST',
-      data
-    })
-    return response
-  } catch (error) {
-    throw error
-  } finally {
-    loading && Store.commit('SET_STATE', {k: loading, v: false})
-  }
-}
-
-export function showUtil (name, id, params = {}) {
-  return instance({
-    url: `${name}/${id}`,
-    method: 'GET',
-    params
-  })
 }
