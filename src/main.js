@@ -11,13 +11,15 @@ import 'element-ui/lib/theme-chalk/index.css'
 import 'nprogress/nprogress.css'
 
 // promise delay
-import UtilDelay from '@/utils/delay'
+import utils from '@/utils'
+import directive from './utils/directive'
 
 sync(store, router)
 routerHook(router)
+directive(Vue)
 
 Vue.use(ElementUI, {size: 'small'})
-Vue.use(UtilDelay)
+Vue.use(utils)
 
 Vue.config.productionTip = false
 new Vue({

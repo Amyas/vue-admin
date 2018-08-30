@@ -9,7 +9,7 @@
     @close="TOGGLE_FORM(['CLOSE',false])">
     <el-form ref="form" :model="form.data" :rules="form.rules">
       <el-form-item label="昵称" prop="nickName">
-        <el-input v-model="form.data.nickName"></el-input>
+        <el-input v-model="form.data.nickName" v-focus></el-input>
       </el-form-item>
       <el-form-item label="用户名" prop="username">
         <el-input v-model="form.data.username"></el-input>

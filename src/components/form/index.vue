@@ -5,7 +5,7 @@
     @click="handleClickLayout">
     <div class="form-main" :class="mainClass">
       <h3 class="title">{{title}}-{{type | formType}}</h3>
-      <div class="main">
+      <div class="main" @keyup.enter="handleSubmit" @keyup.esc="handleCloseForm">
         <slot></slot>
       </div>
       <div class="footer">
@@ -74,6 +74,9 @@ export default {
         }
       })
     }
+  },
+  mounted () {
+
   },
   beforeDestroy () {
     this.$emit('close')
