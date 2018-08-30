@@ -1,5 +1,5 @@
 <template>
-  <div class="login-box">
+  <div class="login-box" @keyup.enter="submit($refs.form)">
     <h3>登录</h3>
     <el-form ref="form" :model="form.data" :rules="form.rules">
       <el-form-item prop="username">
