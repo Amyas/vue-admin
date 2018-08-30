@@ -1,6 +1,6 @@
 <template>
   <form-layout
-    v-if="form.visible"
+    v-show="form.visible"
     title="用户"
     submit="user/submit"
     :type="form.type"
