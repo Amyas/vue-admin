@@ -81,20 +81,40 @@ export async function removeUtil (name, id, options = {}) {
   }
 }
 
-export function createUtil (name, data = {}) {
-  return instance({
-    url: name,
-    method: 'POST',
-    data
-  })
+export async function updateUtil (name, id, options = {}) {
+  const {data = {}, loading} = options
+
+  loading && Store.commit('SET_STATE', {k: loading, v: true})
+  try {
+    const response = await instance({
+      url: `${name}/${id}`,
+      method: 'PUT',
+      data
+    })
+    return response
+  } catch (error) {
+    throw error
+  } finally {
+    loading && Store.commit('SET_STATE', {k: loading, v: false})
+  }
 }
 
-export function updateUtil (name, id, data = {}) {
-  return instance({
-    url: `${name}/${id}`,
-    method: 'PUT',
-    data
-  })
+export async function createUtil (name, options = {}) {
+  const {data = {}, loading} = options
+
+  loading && Store.commit('SET_STATE', {k: loading, v: true})
+  try {
+    const response = await instance({
+      url: name,
+      method: 'POST',
+      data
+    })
+    return response
+  } catch (error) {
+    throw error
+  } finally {
+    loading && Store.commit('SET_STATE', {k: loading, v: false})
+  }
 }
 
 export function showUtil (name, id, params = {}) {

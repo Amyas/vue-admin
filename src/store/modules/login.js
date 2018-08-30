@@ -14,13 +14,13 @@ export default {
         username: [{required: true, message: '请输入用户名!'}],
         password: [{required: true, message: '请输入密码!'}]
       },
-      isLoading: false
+      loading: false
     }
   },
   getters: {
     formData: state => state.form.data,
     formRule: state => state.form.rule,
-    formLoading: state => state.form.isLoading,
+    formLoading: state => state.form.loading,
 
     token: state => state.userInfo.token,
     userName: state => state.userInfo.user.nickName
@@ -39,7 +39,7 @@ export default {
 
         const userInfo = await fetchUtil('login', {
           data,
-          loading: 'login.form.isLoading'
+          loading: 'login.form.loading'
         })
 
         localStorage.setItem('userInfo', JSON.stringify(userInfo))

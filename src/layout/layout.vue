@@ -70,8 +70,12 @@ export default {
   .el-aside {
     color: #fff;
     background-color: #409eff;
+    z-index: 999;
     h3 {
       text-align: center;
+    }
+    .el-menu {
+      border-right: none;
     }
     .el-menu-item.is-active {
       color: #fff !important;
