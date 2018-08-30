@@ -70,6 +70,7 @@ export default {
         .then(async _ => {
           try {
             await fetchRemove(id)
+            Message.success('用户删除成功！')
             dispatch('index')
           } catch (error) {
           }
