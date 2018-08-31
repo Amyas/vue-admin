@@ -36,13 +36,17 @@
       <el-header height="20px">
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item>首页</el-breadcrumb-item>
-          <template v-for="(item, index) in $route.matched">
-            <el-breadcrumb-item :key="index">{{item.meta.routeName}}</el-breadcrumb-item>
-          </template>
+            <transition-group name="breadcrumb" mode="in-out">
+              <template v-for="(item, index) in $route.matched">
+                <el-breadcrumb-item :key="index">{{item.meta.routeName}}</el-breadcrumb-item>
+              </template>
+            </transition-group>
         </el-breadcrumb>
       </el-header>
       <el-main>
-          <router-view></router-view>
+          <transition name="fade-transform" mode="out-in">
+            <router-view></router-view>
+          </transition>
       </el-main>
     </el-container>
   </el-container>
@@ -107,4 +111,26 @@ export default {
   }
 
 }
+.fade-transform-enter-active,
+.fade-transform-leave-active {
+  transition: all .5s;
+}
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all .5s;
+}
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
 </style>
