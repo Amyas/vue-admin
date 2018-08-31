@@ -10,7 +10,7 @@ export function userCheckPassword (rule, value, callback) {
 export function userPassword (rule, value, callback) {
   const {checkPassword} = Store.state.user.form.data
   if (value && checkPassword && value !== checkPassword) {
-    return callback(new Error('两次密码输入不一致'))
+    return callback(new Error('两次密码输入不一致!'))
   }
   callback()
 }

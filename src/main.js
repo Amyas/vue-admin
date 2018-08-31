@@ -10,7 +10,6 @@ import 'normalize.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'nprogress/nprogress.css'
 
-// promise delay
 import utils from '@/utils'
 import directive from './utils/directive'
 
