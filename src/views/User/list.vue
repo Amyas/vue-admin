@@ -19,14 +19,19 @@
       border
       @selection-change="SET_SELECT_LIST"
       style="width: 100%">
-      <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column type="selection" width="36"></el-table-column>
       <el-table-column prop="_id"
         label="编号"
-        width="220">
+        width="200">
       </el-table-column>
-      <el-table-column prop="nickName" label="昵称" width="180"></el-table-column>
-      <el-table-column prop="username" label="账号" width="180"></el-table-column>
+      <el-table-column prop="nickName" label="昵称"></el-table-column>
+      <el-table-column prop="username" label="账号"></el-table-column>
       <el-table-column prop="password" label="密码"></el-table-column>
+      <el-table-column label="创建时间" width="180">
+        <template slot-scope="scope">
+          <span>{{scope.row.createTime | dateToString}}</span>
+        </template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-button type="text" @click="TOGGLE_FORM(['update',true,scope.row])">编辑</el-button>

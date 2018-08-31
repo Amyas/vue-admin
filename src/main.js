@@ -12,10 +12,12 @@ import 'nprogress/nprogress.css'
 
 import utils from './utils'
 import directive from './utils/directive'
+import filters from './utils/filters'
 
 sync(store, router)
 routerHook(router)
 directive(Vue)
+filters(Vue)
 
 Vue.use(ElementUI, {size: 'small'})
 Vue.use(utils)
