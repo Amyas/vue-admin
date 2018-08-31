@@ -13,6 +13,9 @@ export function changeQuery ({key, val}) {
     ...this.$route.query,
     [key]: val
   }
+  if (!val) {
+    delete query[key]
+  }
 
   if (key === 'pageSize') {
     query['pageNumber'] = 1

@@ -1,6 +1,33 @@
 <template>
   <list-layout>
 
+    <template slot="filter">
+      <el-select
+        clearable
+        placeholder="请选择"
+        :value="$route.query.nickName"
+        @change="val=>$changeQuery({key:'nickName',val})"  >
+        <el-option
+          v-for="item in nicknames"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+      <el-select
+        clearable
+        placeholder="请选择"
+        :value="$route.query.username"
+        @change="val=>$changeQuery({key:'username',val})"  >
+        <el-option
+          v-for="item in usernames"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </template>
+
     <template slot="ctrl">
       <el-button type="primary"
         @click="TOGGLE_FORM(['create',true])">
@@ -68,6 +95,18 @@ export default {
   async beforeRouteUpdate (to, from, next) {
     await Store.dispatch('user/index', to.query)
     next()
+  },
+  data () {
+    return {
+      nicknames: [
+        {label: '王建鹏', value: '王建鹏'},
+        {label: '1', value: '1'}
+      ],
+      usernames: [
+        {label: '11', value: '11'},
+        {label: '1', value: '1'}
+      ]
+    }
   },
   components: {
     listLayout,
