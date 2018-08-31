@@ -31,16 +31,16 @@ export default {
   state: {
     list: {
       data: [],
-      total: 200,
-      pageSize: 20,
+      total: 0,
       loading: false
     },
     form: initForm()
   },
   getters: {},
   mutations: {
-    SET_LIST (state, v) {
-      state.list.data = v
+    SET_LIST (state, {users, total}) {
+      state.list.data = users
+      state.list.total = total
     },
     TOGGLE_FORM (state, [type, visible, data]) {
       if (type === 'update') {
@@ -60,8 +60,8 @@ export default {
   actions: {
     async index ({commit}, query) {
       try {
-        const {users} = await fetchIndex(query)
-        commit('SET_LIST', users)
+        const {users, total} = await fetchIndex(query)
+        commit('SET_LIST', {users, total})
       } catch (error) {
 
       }
