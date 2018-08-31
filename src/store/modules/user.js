@@ -84,7 +84,7 @@ export default {
               await fetchRemoveBatch(state.selectList)
             }
             Message.success('删除成功！')
-            dispatch('index')
+            dispatch('index', this.state.route.query)
           } catch (error) {
             console.log('user.remove', error)
           }
@@ -102,7 +102,7 @@ export default {
 
       await dispatch(type, data)
       Message.success(`用户${type === 'create' ? '创建' : '更新'}成功！`)
-      await dispatch('index')
+      await dispatch('index', this.state.route.query)
     }
   }
 }
