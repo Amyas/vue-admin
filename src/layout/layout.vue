@@ -21,7 +21,7 @@
               </router-link>
             </template>
           </el-submenu>
-          <div v-else-if="item.name !== 'index'" :key="`item_${index}`">
+          <div v-else-if="!item.meta.hidden" :key="`item_${index}`">
             <router-link :to="item.path">
               <el-menu-item :index="item.name">
               <i :class="item.meta.iconClass"></i>
