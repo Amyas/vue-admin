@@ -1,4 +1,4 @@
-import {fetchIndex, fetchRemove, fetchCreate, fetchUpdate} from '@/api/user'
+import {fetchIndex, fetchRemove, fetchCreate, fetchUpdate, fetchRemoveBatch} from '@/api/user'
 import {MessageBox, Message} from 'element-ui'
 import {userCheckPassword, userPassword} from '@/utils/validator'
 
@@ -34,6 +34,7 @@ export default {
       total: 0,
       loading: false
     },
+    selectList: [],
     form: initForm()
   },
   getters: {},
@@ -55,6 +56,9 @@ export default {
 
       state.form.visible = visible
       state.form.type = type
+    },
+    SET_SELECT_LIST (state, v) {
+      state.selectList = v
     }
   },
   actions: {
@@ -63,18 +67,26 @@ export default {
         const {users, total} = await fetchIndex(query)
         commit('SET_LIST', {users, total})
       } catch (error) {
-
+        console.log('user.index', error)
       }
     },
-    async remove ({commit, dispatch}, id) {
+    async remove ({commit, dispatch, state}, id) {
+      if (!id && !state.selectList.length) {
+        return Message.warning('请选择要删除的数据!')
+      }
       MessageBox
         .confirm('此操作将永久删除该数据,是否继续?', '提示', {type: 'warning'})
         .then(async _ => {
           try {
-            await fetchRemove(id)
-            Message.success('用户删除成功！')
+            if (id) {
+              await fetchRemove(id)
+            } else {
+              await fetchRemoveBatch(state.selectList)
+            }
+            Message.success('删除成功！')
             dispatch('index')
           } catch (error) {
+            console.log('user.remove', error)
           }
         })
     },

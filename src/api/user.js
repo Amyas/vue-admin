@@ -29,3 +29,12 @@ export function fetchRemove (id, data = {}) {
     loading: 'user.list.loading'
   })
 }
+
+export function fetchRemoveBatch (data = {}) {
+  console.log(data)
+  return fetchUtil('user/destroyBatch', {
+    method: 'POST',
+    data,
+    loading: 'user.list.loading'
+  })
+}

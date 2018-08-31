@@ -1,48 +1,40 @@
 <template>
   <list-layout>
-    <el-button
-      slot="ctrl"
-      type="primary"
-      @click="TOGGLE_FORM(['create',true])">
-      新建用户
-    </el-button>
+
+    <template slot="ctrl">
+      <el-button type="primary"
+        @click="TOGGLE_FORM(['create',true])">
+        新建用户
+      </el-button>
+      <el-button type="danger"
+       @click="remove()">
+       批量删除
+      </el-button>
+    </template>
+
     <el-table
       :data="list.data"
       v-loading="list.loading"
       stripe
       border
+      @selection-change="SET_SELECT_LIST"
       style="width: 100%">
-      <el-table-column
-        prop="_id"
+      <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column prop="_id"
         label="编号"
         width="220">
       </el-table-column>
-      <el-table-column
-        prop="nickName"
-        label="昵称"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="username"
-        label="账号"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="password"
-        label="密码">
-      </el-table-column>
-      <el-table-column
-        fixed="right"
-        label="操作"
-        width="100">
+      <el-table-column prop="nickName" label="昵称" width="180"></el-table-column>
+      <el-table-column prop="username" label="账号" width="180"></el-table-column>
+      <el-table-column prop="password" label="密码"></el-table-column>
+      <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-button type="text" @click="TOGGLE_FORM(['update',true,scope.row])">编辑</el-button>
           <el-button @click="remove(scope.row._id)" type="text">删除</el-button>
         </template>
       </el-table-column>
-
     </el-table>
-    <formComponent />
+
     <template slot="pagination">
       <el-pagination
         @size-change="val=>$changeQuery({key:'pageSize',val})"
@@ -54,6 +46,8 @@
         :total="list.total">
       </el-pagination>
     </template>
+
+    <formComponent />
   </list-layout>
 </template>
 <script>
@@ -79,7 +73,7 @@ export default {
   },
   methods: {
     ...mapActions('user', ['remove']),
-    ...mapMutations('user', ['TOGGLE_FORM'])
+    ...mapMutations('user', ['TOGGLE_FORM', 'SET_SELECT_LIST'])
   }
 }
 </script>

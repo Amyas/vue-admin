@@ -69,7 +69,7 @@ export default {
             await this.$store.dispatch(this.submit, this.type)
             this.handleCloseForm()
           } catch (error) {
-            console.log(error)
+            console.log(this.submit, error)
           }
         }
       })
