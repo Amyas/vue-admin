@@ -31,6 +31,8 @@ export default {
   state: {
     list: {
       data: [],
+      total: 200,
+      pageSize: 20,
       loading: false
     },
     form: initForm()
@@ -56,9 +58,9 @@ export default {
     }
   },
   actions: {
-    async index ({commit}) {
+    async index ({commit}, query) {
       try {
-        const {users} = await fetchIndex()
+        const {users} = await fetchIndex(query)
         commit('SET_LIST', users)
       } catch (error) {
 

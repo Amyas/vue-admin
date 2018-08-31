@@ -34,17 +34,23 @@ export async function fetchUtil (name, options = {}) {
     loading
   } = options
 
-  if (method === 'PUT' || method === 'DELETE') {
+  const opt = {}
+
+  if (method === 'GET') {
+    opt['params'] = data
+  } else if (method === 'PUT' || method === 'DELETE') {
     name = `${name}/${options.id}`
+    opt['data'] = data
+  } else {
+    opt['data'] = data
   }
+
+  opt['url'] = name
+  opt['method'] = method
 
   loading && Store.commit('SET_STATE', {k: loading, v: true})
   try {
-    const response = await instance({
-      url: name,
-      method,
-      data
-    })
+    const response = await instance(opt)
     return response
   } catch (error) {
     throw error

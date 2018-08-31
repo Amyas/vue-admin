@@ -11,7 +11,7 @@ export default router => {
       Router.replace('/login')
     } else if (!userInfo && storageUserInfo) {
       Store.commit('login/SET_USER_INFO', JSON.parse(storageUserInfo))
-      Router.replace(to.path)
+      Router.replace({path: to.path, query: to.query})
     }
     nprogress.start()
     next()

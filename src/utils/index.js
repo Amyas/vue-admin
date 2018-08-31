@@ -8,8 +8,25 @@ export function delay (time) {
   })
 }
 
+export function changeQuery ({key, val}) {
+  const query = {
+    ...this.$route.query,
+    [key]: val
+  }
+
+  if (key === 'pageSize') {
+    query['pageNumber'] = 1
+  }
+
+  this.$router.push({
+    ...this.$route,
+    query
+  })
+}
+
 export default {
   install () {
     Vue.prototype.$delay = delay
+    Vue.prototype.$changeQuery = changeQuery
   }
 }

@@ -43,6 +43,17 @@
 
     </el-table>
     <formComponent />
+    <template slot="pagination">
+      <el-pagination
+        @size-change="val=>$changeQuery({key:'pageSize',val})"
+        @current-change="val=>$changeQuery({key:'pageNumber',val})"
+        :current-page="Number($route.query.pageNumber) || 1"
+        :page-sizes="[20, 50, 100, 200]"
+        :page-size="Number($route.query.pageSize) || 20"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="list.total">
+      </el-pagination>
+    </template>
   </list-layout>
 </template>
 <script>
@@ -52,7 +63,11 @@ import Store from '@/store'
 import {mapActions, mapMutations, mapState} from 'vuex'
 export default {
   async beforeRouteEnter (to, from, next) {
-    await Store.dispatch('user/index')
+    await Store.dispatch('user/index', to.query)
+    next()
+  },
+  async beforeRouteUpdate (to, from, next) {
+    await Store.dispatch('user/index', to.query)
     next()
   },
   components: {
