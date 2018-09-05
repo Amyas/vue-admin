@@ -8,14 +8,16 @@
         background-color="#409eff"
         text-color="#fff">
         <template v-for="(item,index) in $router.options.routes">
+
           <template v-if="item.children && item.children.length === 1">
             <router-link :to="item.path" :key="index">
-              <el-menu-item :index="item.name">
+              <el-menu-item :index="item.children[0].name">
                 <i :class="item.meta.iconClass" style="padding-right:8px;"></i>
                 <span slot="title">{{item.meta.routeName}}</span>
               </el-menu-item>
             </router-link>
           </template>
+
           <template v-else-if="item.children && item.children.length > 1">
             <el-submenu :index="item.name" :key="index">
               <template slot="title">
@@ -32,27 +34,6 @@
             </el-submenu>
           </template>
 
-          <!-- <el-submenu v-if="item.children" :index="item.name" :key="`item_${index}`">
-            <template slot="title">
-              <i :class="item.meta.iconClass" style="padding-right:8px;"></i>
-              <span>{{item.meta.routeName}}</span>
-            </template>
-            <template v-for="(subItem,subIndex) in item.children">
-              <router-link :to="{name:subItem.name}" :key="`subItem_${subIndex}`">
-                <el-menu-item :index="subItem.name">
-                  {{subItem.meta.routeName}}
-                </el-menu-item>
-              </router-link>
-            </template>
-          </el-submenu>
-          <div v-else-if="!item.meta.hidden" :key="`item_${index}`">
-            <router-link :to="item.path">
-              <el-menu-item :index="item.name">
-              <i :class="item.meta.iconClass"></i>
-              <span slot="title">{{item.meta.routeName}}</span>
-              </el-menu-item>
-            </router-link>
-          </div> -->
         </template>
       </el-menu>
     </el-aside>

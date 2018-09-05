@@ -14,7 +14,7 @@ export default new Router({
     {// index
       path: '/',
       name: 'index',
-      redirect: 'user',
+      redirect: '/user',
       meta: {
         routeName: '首页',
         hidden: true
@@ -37,10 +37,11 @@ export default new Router({
         iconClass: 'fas fa-user'
       },
       component: Layout,
+      redirect: '/user/list',
       children: [
         {
           path: 'list',
-          name: 'userlist',
+          name: 'userList',
           meta: {
             routeName: '用户列表'
           },
