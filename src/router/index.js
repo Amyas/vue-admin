@@ -11,7 +11,7 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
-    {// Index首页模块
+    {// index
       path: '/',
       name: 'index',
       redirect: 'user',
@@ -20,7 +20,7 @@ export default new Router({
         hidden: true
       }
     },
-    {
+    {// login
       path: '/login',
       name: 'login',
       meta: {
@@ -29,16 +29,7 @@ export default new Router({
       },
       component: Login
     },
-    {
-      path: '/test',
-      name: 'test',
-      meta: {
-        routeName: '测试管理',
-        iconClass: ''
-      },
-      component: Layout
-    },
-    {// User用户模块
+    {// user
       path: '/user',
       name: 'user',
       meta: {
@@ -46,7 +37,6 @@ export default new Router({
         iconClass: 'fas fa-user'
       },
       component: Layout,
-      redirect: '/user/list',
       children: [
         {
           path: 'list',
@@ -58,21 +48,28 @@ export default new Router({
         }
       ]
     },
-    {// a用户模块
-      path: '/a',
-      name: 'a',
+    {
+      path: '/news',
+      name: 'news',
       meta: {
-        routeName: 'a管理',
-        iconClass: ''
+        routeName: '文章管理',
+        iconClass: 'fas fa-user'
       },
       component: Layout,
-      redirect: '/a/list',
       children: [
         {
           path: 'list',
-          name: 'alist',
+          name: 'newslist',
           meta: {
-            routeName: 'a列表'
+            routeName: '文章列表'
+          },
+          component: UserList
+        },
+        {
+          path: 'edit',
+          name: 'newsedit',
+          meta: {
+            routeName: '新建文章'
           },
           component: UserList
         }

@@ -8,7 +8,31 @@
         background-color="#409eff"
         text-color="#fff">
         <template v-for="(item,index) in $router.options.routes">
-          <el-submenu v-if="item.children" :index="item.name" :key="`item_${index}`">
+          <template v-if="item.children && item.children.length === 1">
+            <router-link :to="item.path" :key="index">
+              <el-menu-item :index="item.name">
+                <i :class="item.meta.iconClass" style="padding-right:8px;"></i>
+                <span slot="title">{{item.meta.routeName}}</span>
+              </el-menu-item>
+            </router-link>
+          </template>
+          <template v-else-if="item.children && item.children.length > 1">
+            <el-submenu :index="item.name" :key="index">
+              <template slot="title">
+                <i :class="item.meta.iconClass" style="padding-right:8px;"></i>
+                <span>{{item.meta.routeName}}</span>
+              </template>
+              <template v-for="(subItem,subIndex) in item.children">
+                <router-link :to="{name:subItem.name}" :key="subIndex">
+                  <el-menu-item :index="subItem.name">
+                    {{subItem.meta.routeName}}
+                  </el-menu-item>
+                </router-link>
+              </template>
+            </el-submenu>
+          </template>
+
+          <!-- <el-submenu v-if="item.children" :index="item.name" :key="`item_${index}`">
             <template slot="title">
               <i :class="item.meta.iconClass" style="padding-right:8px;"></i>
               <span>{{item.meta.routeName}}</span>
@@ -28,7 +52,7 @@
               <span slot="title">{{item.meta.routeName}}</span>
               </el-menu-item>
             </router-link>
-          </div>
+          </div> -->
         </template>
       </el-menu>
     </el-aside>
@@ -61,6 +85,9 @@ export default {
     name () {
       return this.$store.getters['login/userName']
     }
+  },
+  mounted () {
+    console.log(this)
   }
 }
 </script>
