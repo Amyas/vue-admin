@@ -67,7 +67,7 @@ export default {
         const {users, total} = await fetchIndex(query)
         commit('SET_LIST', {users, total})
       } catch (error) {
-        console.log('user.index', error)
+        console.warn(error)
       }
     },
     async remove ({commit, dispatch, state}, id) {
@@ -86,7 +86,7 @@ export default {
             Message.success('删除成功！')
             dispatch('index', this.state.route.query)
           } catch (error) {
-            console.log('user.remove', error)
+            console.warn(error)
           }
         })
     },

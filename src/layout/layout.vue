@@ -66,9 +66,6 @@ export default {
     name () {
       return this.$store.getters['login/userName']
     }
-  },
-  mounted () {
-    console.log(this)
   }
 }
 </script>
@@ -121,7 +118,7 @@ export default {
 }
 .fade-transform-enter-active,
 .fade-transform-leave-active {
-  transition: all .5s;
+  transition: all .3s;
 }
 .fade-transform-enter {
   opacity: 0;
@@ -133,7 +130,7 @@ export default {
 }
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  transition: all .5s;
+  transition: all .3s;
 }
 .breadcrumb-enter,
 .breadcrumb-leave-active {
