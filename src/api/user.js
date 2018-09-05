@@ -31,7 +31,6 @@ export function fetchRemove (id, data = {}) {
 }
 
 export function fetchRemoveBatch (data = {}) {
-  console.log(data)
   return fetchUtil('user/destroyBatch', {
     method: 'POST',
     data,

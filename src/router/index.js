@@ -5,6 +5,7 @@ const Layout = () => import('@/layout/layout')
 const Login = () => import('@/views/Login')
 
 const UserList = () => import('@/views/User/list')
+const articleList = () => import('@/views/Article/list')
 
 Vue.use(Router)
 
@@ -50,29 +51,22 @@ export default new Router({
       ]
     },
     {
-      path: '/news',
-      name: 'news',
+      path: '/article',
+      name: 'article',
       meta: {
         routeName: '文章管理',
-        iconClass: 'fas fa-user'
+        iconClass: 'fas fa-newspaper'
       },
       component: Layout,
+      redirect: '/article/list',
       children: [
         {
           path: 'list',
-          name: 'newslist',
+          name: 'articleList',
           meta: {
             routeName: '文章列表'
           },
-          component: UserList
-        },
-        {
-          path: 'edit',
-          name: 'newsedit',
-          meta: {
-            routeName: '新建文章'
-          },
-          component: UserList
+          component: articleList
         }
       ]
     }

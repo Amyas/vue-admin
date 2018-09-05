@@ -4,6 +4,7 @@ import _ from 'lodash'
 
 import login from './modules/login'
 import user from './modules/user'
+import article from './modules/article'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   },
   modules: {
     login,
-    user
+    user,
+    article
   }
 })
