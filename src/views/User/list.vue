@@ -56,7 +56,7 @@
       <el-table-column prop="password" label="密码"></el-table-column>
       <el-table-column label="创建时间" width="180">
         <template slot-scope="scope">
-          <span>{{scope.row.createTime | dateToString}}</span>
+          <span>{{scope.row.created | dateToString}}</span>
         </template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
