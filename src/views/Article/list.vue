@@ -2,7 +2,7 @@
   <list-layout>
     <template slot="ctrl">
       <el-button type="primary"
-        @click="$router.push({name:'articleEdit'})">
+        @click="TOGGLE_FORM(['create',true])">
         新建文章
       </el-button>
     </template>
@@ -18,7 +18,11 @@
         width="200">
       </el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column prop="content" label="简介"></el-table-column>
+      <el-table-column label="简介">
+        <template slot-scope="scope">
+          <span>{{scope.row.content.slice(0,15)}}...</span>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" width="180">
         <template slot-scope="scope">
           <span>{{scope.row.created | dateToString}}</span>
@@ -31,7 +35,7 @@
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
-          <el-button type="text" @click="$router.push({name:'articleEdit',parmas:{id:scope.row._id}})">编辑</el-button>
+          <el-button type="text" @click="TOGGLE_FORM(['update',true,scope.row])">编辑</el-button>
           <el-button @click="remove(scope.row._id)" type="text">删除</el-button>
         </template>
       </el-table-column>
@@ -49,12 +53,14 @@
       </el-pagination>
     </template>
 
+    <formComponent />
   </list-layout>
 </template>
 <script>
 import listLayout from '@/layout/listLayout'
+import formComponent from './form'
 import Store from '@/store'
-import {mapActions, mapState} from 'vuex'
+import {mapActions, mapState, mapMutations} from 'vuex'
 export default {
   async beforeRouteEnter (to, from, next) {
     await Store.dispatch('article/index', to.query)
@@ -65,13 +71,16 @@ export default {
     next()
   },
   components: {
-    listLayout
+    listLayout,
+    formComponent
   },
   computed: {
     ...mapState('article', ['list'])
   },
   methods: {
-    ...mapActions('article', ['remove'])
+    ...mapActions('article', ['remove']),
+    ...mapMutations('article', ['TOGGLE_FORM'])
+
   }
 }
 </script>

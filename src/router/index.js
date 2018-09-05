@@ -6,6 +6,7 @@ const Login = () => import('@/views/Login')
 
 const UserList = () => import('@/views/User/list')
 const articleList = () => import('@/views/Article/list')
+const articleEdit = () => import('@/views/Article/form')
 
 Vue.use(Router)
 
