@@ -29,8 +29,8 @@ export default {
 
   },
   mutations: {
-    SET_LIST (state, {articles, total}) {
-      state.list.data = articles
+    SET_LIST (state, {items, total}) {
+      state.list.data = items
       state.list.total = total
     },
     TOGGLE_FORM (state, [type, visible, data]) {
@@ -46,13 +46,16 @@ export default {
 
       state.form.visible = visible
       state.form.type = type
+    },
+    SET_FORM_CONTENT (state, v) {
+      state.form.data.content = v
     }
   },
   actions: {
     async index ({commit}, query) {
       try {
-        const {articles, total} = await fetchIndex(query)
-        commit('SET_LIST', {articles, total})
+        const {items, total} = await fetchIndex(query)
+        commit('SET_LIST', {items, total})
       } catch (error) {
         console.warn(error)
       }
@@ -80,8 +83,9 @@ export default {
       const {_id, ...other} = data
       await fetchUpdate(_id, other)
     },
-    async submit ({dispatch, state}, type) {
+    async submit ({dispatch, state, rootState}, type) {
       const {data} = state.form
+      data.author = rootState.login.userInfo.user._id
       await dispatch(type, data)
       Message.success(`文章${type === 'create' ? '创建' : '更新'}成功！`)
       await dispatch('index', this.state.route.query)

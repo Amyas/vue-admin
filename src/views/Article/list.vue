@@ -18,11 +18,6 @@
         width="200">
       </el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column label="简介">
-        <template slot-scope="scope">
-          <span>{{scope.row.content.slice(0,15)}}...</span>
-        </template>
-      </el-table-column>
       <el-table-column label="创建时间" width="180">
         <template slot-scope="scope">
           <span>{{scope.row.created | dateToString}}</span>
@@ -53,7 +48,7 @@
       </el-pagination>
     </template>
 
-    <formComponent />
+    <formComponent v-if="form.visible" />
   </list-layout>
 </template>
 <script>
@@ -75,7 +70,7 @@ export default {
     formComponent
   },
   computed: {
-    ...mapState('article', ['list'])
+    ...mapState('article', ['list', 'form'])
   },
   methods: {
     ...mapActions('article', ['remove']),

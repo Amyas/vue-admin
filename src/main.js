@@ -10,6 +10,10 @@ import 'normalize.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'nprogress/nprogress.css'
 
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
 import utils from './utils'
 import directive from './utils/directive'
 import filters from './utils/filters'

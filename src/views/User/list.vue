@@ -79,7 +79,7 @@
       </el-pagination>
     </template>
 
-    <formComponent />
+    <formComponent v-if="form.visible" />
   </list-layout>
 </template>
 <script>
@@ -113,7 +113,7 @@ export default {
     formComponent
   },
   computed: {
-    ...mapState('user', ['list'])
+    ...mapState('user', ['list', 'form'])
   },
   methods: {
     ...mapActions('user', ['remove']),

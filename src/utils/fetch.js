@@ -9,7 +9,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    if (config.url !== '/api/login') {
+    if (config.url !== 'login') {
       const token = Store.getters['login/token']
       config.headers['authorization'] = token
     }
@@ -22,7 +22,7 @@ instance.interceptors.response.use(
   response => response.data,
   error => {
     const {response} = error
-    Message.error(`请求失败, 状态码:${response.status}, 错误信息:${response.data.errMsg}`)
+    response && Message.error(`请求失败, 状态码:${response.status}, 错误信息:${response.data.errMsg}`)
     return Promise.reject(error)
   }
 )

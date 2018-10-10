@@ -5,7 +5,8 @@
     @click="handleClickLayout">
     <div class="form-main" :class="mainClass">
       <h3 class="title">{{title}}-{{type | formType}}</h3>
-      <div class="main" @keyup.enter="handleSubmit" @keyup.esc="handleCloseForm">
+       <!-- @keyup.enter="handleSubmit" -->
+      <div class="main" @keyup.esc="handleCloseForm">
         <slot></slot>
       </div>
       <div class="footer">
