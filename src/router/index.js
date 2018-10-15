@@ -10,6 +10,7 @@ const articleList = () => import('@/views/Article/list')
 Vue.use(Router)
 
 export default new Router({
+  base: 'admin',
   mode: 'history',
   routes: [
     {// index
