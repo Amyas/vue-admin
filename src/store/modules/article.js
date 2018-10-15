@@ -7,11 +7,13 @@ const initForm = () => ({
   loading: false,
   data: {
     title: '',
-    content: ''
+    content: '',
+    intro: ''
   },
   rules: {
-    nickName: [{required: true, message: '请输入标题!'}],
-    username: [{required: true, message: '请输入内容!'}]
+    title: [{required: true, message: '请输入标题!'}],
+    intro: [{required: true, message: '请输入简介!'}],
+    content: [{required: true, message: '请输入内容!'}]
   }
 })
 

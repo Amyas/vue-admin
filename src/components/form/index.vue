@@ -3,7 +3,7 @@
     id="form-layout"
     ref="formLayout"
     @click="handleClickLayout">
-    <div class="form-main" :class="mainClass">
+    <div class="form-main" :class="mainClass" :style="{width:this.width || '600px'}">
       <h3 class="title">{{title}}-{{type | formType}}</h3>
        <!-- @keyup.enter="handleSubmit" -->
       <div class="main" @keyup.esc="handleCloseForm">
@@ -17,8 +17,10 @@
   </div>
 </template>
 <script>
+import _ from 'lodash'
+import {MessageBox} from 'element-ui'
 export default {
-  props: ['title', 'type', 'form', 'submit', 'loading'],
+  props: ['title', 'type', 'loading', 'formData', 'validateParams', 'width'],
   data () {
     return {
       mainClass: {
@@ -38,6 +40,9 @@ export default {
       }
     }
   },
+  created () {
+    this.defaultFormData = _.clone(this.formData)
+  },
   methods: {
     async handleClickLayout (e) {
       if (e.target === this.$refs.formLayout) {
@@ -45,6 +50,36 @@ export default {
       }
     },
     async handleCloseForm () {
+      const {validateParams} = this
+      let checkIfChange = false
+      if (validateParams && validateParams.length) {
+        for (let i = 0; i < validateParams.length; i++) {
+          if (this.formData[validateParams[i]] !== this.defaultFormData[validateParams[i]]) {
+            checkIfChange = true
+            break
+          }
+        }
+      }
+      if (checkIfChange) {
+        MessageBox
+          .confirm('检测到未保存的内容，是否在离开也面前保存修改？', '确认信息', {
+            distinguishCancelAndClose: true,
+            confirmButtonText: '保存',
+            cancelButtonText: '放弃修改'
+          })
+          .then(() => this.handleSubmit())
+          .catch(() => this.hideFormLayout())
+      } else {
+        this.hideFormLayout()
+      }
+    },
+    async handleSubmit () {
+      this.$emit('submit', () => {
+        this.defaultFormData = this.formData
+        this.handleCloseForm()
+      })
+    },
+    async hideFormLayout () {
       this.mainClass.fadeIn = false
       this.mainClass.fadeOut = true
 
@@ -62,22 +97,7 @@ export default {
 
       this.$refs.formLayout.style.transition = ''
       this.$refs.formLayout.style.opacity = 1
-    },
-    async handleSubmit () {
-      this.form.validate(async valid => {
-        if (valid) {
-          try {
-            await this.$store.dispatch(this.submit, this.type)
-            this.handleCloseForm()
-          } catch (error) {
-            console.warn(this.submit, error)
-          }
-        }
-      })
     }
-  },
-  mounted () {
-
   },
   beforeDestroy () {
     this.$emit('close')

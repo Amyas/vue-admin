@@ -1,10 +1,10 @@
 <template>
   <form-layout
     title="用户"
-    submit="user/submit"
     :type="form.type"
-    :form="$refs.form"
+    :formData="$refs.form"
     :loading="form.loading"
+    @submit="submit"
     @close="TOGGLE_FORM(['CLOSE',false])">
     <el-form ref="form" :model="form.data" :rules="form.rules">
       <el-form-item label="昵称" prop="nickName">
@@ -33,7 +33,19 @@ export default {
     formLayout
   },
   methods: {
-    ...mapMutations('user', ['TOGGLE_FORM'])
+    ...mapMutations('user', ['TOGGLE_FORM']),
+    submit (cb) {
+      this.$refs.form.validate(async valid => {
+        if (valid) {
+          try {
+            await this.$store.dispatch('user/submit', this.form.type)
+            cb && cb()
+          } catch (error) {
+            console.warn(this.submit, error)
+          }
+        }
+      })
+    }
   }
 }
 </script>
