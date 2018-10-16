@@ -54,6 +54,7 @@
     "not ie <= 8"
   ],
   "vue": {
+    "baseUrl": "/admin/",
     "devServer": {
       "proxy": {
         "/api": {
